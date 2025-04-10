@@ -1,0 +1,124 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: black;
+  background-color: white;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+.token-logo {
+  width: 26px;
+  height: 26px;
+  border-radius: 13px;
+  margin-right: 10px;
+}
+
+.chain-block {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  border-radius: 16px;
+  border: 1px solid #ccc;
+  position: relative;
+  min-height: 400px;
+}
+
+.chain-block-mob {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid #ccc;
+  position: relative;
+  min-height: 80px;
+}
+
+.wallets-block {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  border-radius: 16px;
+  border: 1px solid #ccc;
+  position: relative;
+  min-height: 200px;
+}
+
+.pool-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  border-radius: 16px;
+  border: 1px solid #ccc;
+  position: relative;
+  width: 300px;
+  min-height: 280px;
+  overflow: hidden;
+}
+
+.pools-page {
+  margin-top: 50px;
+  gap: 30px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;   
+}
+
+.rules-page {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+  text-align: center;
+}
+
+.footer {
+  margin-top: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: '20px';
+  flex-grow: 1;  
+}
