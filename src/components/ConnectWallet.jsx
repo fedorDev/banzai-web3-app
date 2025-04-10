@@ -11,6 +11,13 @@ const ConnectWallet = ({ mode, onConnected }) => {
 
   const allWallets = [
     {
+      title: 'Skip (Manual mode)',
+      icon: 'no-wallet.svg',
+      action: () => {
+        onConnected('manual')
+      },
+    },
+    {
       title: 'Metamask',
       icon: 'metamask.png',
       action: async () => {
@@ -35,49 +42,26 @@ const ConnectWallet = ({ mode, onConnected }) => {
   ]
 
   const checkConnected = () => {
-    console.log('check connected', sdk)
     if (mode !== 'sol' && connected) {
-      allWallets[0].action()
+      // allWallets[1].action()
     }
   }
 
   useEffect(() => {
-    setWallets([ allWallets[ mode === 'sol' ? 1 : 0 ] ])
+    setWallets([ allWallets[ mode === 'sol' ? 2 : 1 ], allWallets[0] ])
 
     checkConnected()
   }, [mode])
-
-  /*
-  if (isMobile && !window.ethereum) {
-    return (
-      <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-        <h3>Please, open MetaMask mobile app</h3>
-
-        <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-          {wallets.map((item) => (
-            <Box sx={{ padding: '40px', cursor: 'pointer' }} key={item.title}>
-              <Box className='wallets-block' onClick={() =>{
-                window.location = 'https://metamask.app.link/dapp/banzai.meme/'+mode
-              }}>
-                <img src={`/icons/${item.icon}`} height='240' width='240' />
-                <Typography>{item.title}</Typography>
-              </Box>
-            </Box>
-          ))}
-        </Box>
-      </Box>      
-    )
-  } */
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
       <h3>Please, connect Web3 wallet:</h3>
 
-      <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+      <Box sx={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row' }}>
         {wallets.map((item) => (
-          <Box sx={{ padding: '40px', cursor: 'pointer' }} key={item.title}>
-            <Box className='wallets-block' onClick={item.action}>
-              <img src={`/icons/${item.icon}`} height='240' width='240' />
+          <Box sx={{ padding: isMobile ? '20px' : '40px', cursor: 'pointer' }} key={item.title}>
+            <Box className={isMobile ? 'wallets-block-mob' : 'wallets-block'} onClick={item.action}>
+              <img src={`/icons/${item.icon}`} />
               <Typography>{item.title}</Typography>
             </Box>
           </Box>

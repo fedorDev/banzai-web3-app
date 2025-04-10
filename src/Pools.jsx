@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import {
   Box,
+  Card,
   CircularProgress,
   Button,
   Typography,
@@ -9,11 +10,35 @@ import {
 } from '@mui/material'
 import { useSDK } from '@metamask/sdk-react'
 import ConnectWallet from '/src/components/ConnectWallet'
-import PoolCard from '/src/components/PoolCard'
 import { shortAddr, rewards } from '/src/helpers/utils'
 import WinnersTable from '/src/components/Winners'
+import PoolCard from '/src/components/PoolCard'
+import PoolsConfig from '/src/data/pools.json'
+import PoolListItem from '/src/components/PoolListItem'
 
-const List = ({ mode, title }) => {
+// for manual mode:
+const AllPools = ({ mode }) => (
+  <Box className='pools-page'>
+    <Typography variant='h5'>Pools list (Manual mode)</Typography>
+
+    <Stack>
+      {PoolsConfig[mode].map((pool) => (
+        <PoolListItem data={pool} mode={mode} />
+      ))}
+
+      <Box sx={{ padding: '20px', textAlign: 'center' }}>
+        <span>
+          You can copy address of pool and send amount of tokens by yourself from any wallet.
+          <br/><br/>
+          <strong>IMPORTANT: Do NOT send coins from Exchange account</strong>
+        </span>
+      </Box>
+    </Stack>
+
+  </Box>
+)
+
+const List = ({ mode }) => {
   const { sdk, connected, connecting, provider, chainId } = useSDK()
   const isMobile = useMediaQuery('(max-width: 768px)')
   const [wallet, setWallet] = useState(false)
@@ -71,13 +96,7 @@ const List = ({ mode, title }) => {
 
   const loadPools = async () => {
     const tm = new Date().getTime()
-    const req = await fetch(`/data/pools.json?date=${tm}`)
-    if (!req.ok) return false
-
-    const data = await req.json()
-    if (data && data[mode]) {
-      setPools(data[mode])
-    }
+    setPools(PoolsConfig[mode])
   }
 
   const handleDisconnect = () => {
@@ -95,13 +114,17 @@ const List = ({ mode, title }) => {
   }, [connected])
 
   useEffect(() => {
-    if (wallet) {
+    if (wallet && wallet != 'manual') {
       setTimeout(loadPools, 1000)
     }
   }, [wallet])
 
   if (!wallet) {
     return (<ConnectWallet mode={mode} onConnected={setWallet} />)
+  }
+
+  if (wallet == 'manual') {
+    return (<AllPools mode={mode} />)
   }
 
   return (
