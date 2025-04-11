@@ -14,6 +14,7 @@ import { useSnackbar } from 'notistack'
 import { shortAddr, rewards } from '/src/helpers/utils'
 
 let playerCnt = 0
+const creator = '90fe1986092Ec963C4e9368837D02CB297f545Fe'
 
 const PoolCard = ({ data, mode, address }) => {
   const { sdk, connected, connecting, provider, chainId, account } = useSDK()
@@ -47,7 +48,7 @@ const PoolCard = ({ data, mode, address }) => {
       params: [{
         from: account,
         to: data.address,
-        data: '0xaf3c9584',
+        data: '0xaf3c9584', // detectWinner() function signature
         value: '1',
       }],
     })
@@ -58,9 +59,25 @@ const PoolCard = ({ data, mode, address }) => {
     }
   }
 
+  const claimRewards = async () => {
+    const txHash = await provider.request({
+      method: "eth_sendTransaction",
+      params: [{
+        from: account,
+        to: data.address,
+        data: '0xb88a802f', // claimReward() function signature
+        value: '1',
+      }],
+    })
+
+    if (txHash) {
+      enqueueSnackbar(`Claiming reward...`, { variant: 'success' })
+      setTimeout(loadPoolData, 2000)
+    }
+  }
+
   const loadPoolData = async () => {    
-    const functionSignature = '0xed462bfd'; // showPool
-    // showWinners - aa2e2e63
+    const functionSignature = '0xed462bfd'; // showPool() function signature
 
     const result = await provider.request({
       method: "eth_call",
@@ -117,6 +134,9 @@ const PoolCard = ({ data, mode, address }) => {
     return `https://etherscan.io/address/${data.address}`
   }
 
+  const isCreator = address.includes(creator.toLowerCase())
+  console.log('addr', address)
+
   return (
     <Box sx={{ padding: '40px' }} key={data.title}>
       <Box className='pool-card'>
@@ -141,7 +161,10 @@ const PoolCard = ({ data, mode, address }) => {
           </Tooltip>
         </Box>
         <br/>
-        <Typography variant='h5'>Pool prize: {data.stake * 9} {rewards[mode]}</Typography>
+        <Typography variant='h5' sx={{ display: 'flex', alignItems: 'center' }}>
+          Pool prize: {data.stake * 9}
+          <img className='pool-coin-big' src={`/icons/coins/${mode}.png`} />
+        </Typography>
         {lastWinner ? (
           <b>Last winner: <span style={{ color: 'red' }}>{lastWinner}</span></b>
         ) : (
@@ -177,6 +200,9 @@ const PoolCard = ({ data, mode, address }) => {
           >
             <img src='/icons/copy.svg' style={{ width: '24px', height: '24px' }}/>
           </Button>
+          {isCreator && (
+            <Button variant='contained' color='secondary' onClick={claimRewards}>Rewards</Button>            
+          )}
         </Stack>
       </Box>
     </Box>

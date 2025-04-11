@@ -51,7 +51,7 @@ const List = ({ mode }) => {
   }
 
   const loadWinners = async () => {    
-    const functionSignature = '0xaa2e2e63'
+    const functionSignature = '0xaa2e2e63' // showWinners() function signature
 
     let list = []
 

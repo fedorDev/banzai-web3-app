@@ -171,6 +171,12 @@ h1 {
   height: 20px;
 }
 
+.pool-coin-big {
+  margin-left: 6px;
+  width: 24px;
+  height: 24px;
+}
+
 .pools-page {
   margin-top: 30px;
   gap: 20px;
@@ -192,6 +198,7 @@ h1 {
 
 .footer {
   margin-top: 80px;
+  margin-bottom: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
