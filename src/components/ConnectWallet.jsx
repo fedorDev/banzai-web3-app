@@ -30,8 +30,9 @@ const ConnectWallet = ({ mode, onConnected }) => {
           })
         }
 
-        if (accounts && accounts.length > 0)
+        if (accounts && accounts.length > 0) {
           onConnected(accounts[0])
+        }
       },
     },
     {

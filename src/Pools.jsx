@@ -53,6 +53,10 @@ const List = ({ mode }) => {
   const loadWinners = async () => {    
     const functionSignature = '0xaa2e2e63' // showWinners() function signature
 
+    window.gtag('event', 'load_winners', {
+      'chain': mode,
+    })
+
     let list = []
 
     for (const pool of pools) {

@@ -46,7 +46,7 @@ const PoolCard = ({ data, mode, address }) => {
     const txHash = await provider.request({
       method: "eth_sendTransaction",
       params: [{
-        from: account,
+        from: address,
         to: data.address,
         data: '0xaf3c9584', // detectWinner() function signature
         value: '1',
@@ -115,6 +115,11 @@ const PoolCard = ({ data, mode, address }) => {
     .then((txHash) => {
       enqueueSnackbar(`Your stake ${data.stake} added!`, { variant: 'success' })
       // reload pool data
+      window.gtag('event', 'add_stake', {
+        'chain': mode,
+        'pool': data.title,
+      })
+
       setTimeout(loadPoolData, 2000)
       setTimeout(loadPoolData, 6000)
     })
@@ -135,7 +140,6 @@ const PoolCard = ({ data, mode, address }) => {
   }
 
   const isCreator = address.includes(creator.toLowerCase())
-  console.log('addr', address)
 
   return (
     <Box sx={{ padding: '40px' }} key={data.title}>
